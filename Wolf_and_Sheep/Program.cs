@@ -7,6 +7,7 @@ namespace Wolf_and_Sheep
         //Titulo do Jogo
         static string titulodojogo = "Wold and Sheep";
         
+        //Criação do tabuleiro do jogo
         static string[,] tabuleiro = new string [8,8]
         {
            {"B", " P", " B", " P", " B", " P", " B", " P"},
@@ -19,8 +20,13 @@ namespace Wolf_and_Sheep
            {"P", " B", " P", " B", " P", " B", " P", " B"},
         };
 
+       //Definição do lobo e das ovelhas
         static string jogador1 = " W";
 
+        static int linha = 7;
+        static int coluna = 5;
+
+        //Codigo Principal
         static void Main(string[] args)
         {
             string escolha = "Sou uma string";
@@ -35,6 +41,7 @@ namespace Wolf_and_Sheep
             Console.WriteLine("3 - Sair");
             escolha = Console.ReadLine();
 
+            //O jogador escolheu jogar
             if (escolha == "1")
             {
                 Console.WriteLine("Esolheste jogar.");
@@ -44,10 +51,16 @@ namespace Wolf_and_Sheep
                 Console.WriteLine("P -> Quadrados Pretos");
 
                 //O joagor começa na casa da ultima linha, segundo quadrado negro a começar do fim.
-                tabuleiro [7, 5] = jogador1;
+                tabuleiro [7, 4] = jogador1;
                 
                 //Linha do tabuleiro
-                for (int i = 0; i < 8; i++)
+
+                bool derrota = false;
+                
+                while(!derrota)
+                {
+
+                    for (int i = 0; i < 8; i++)
                 {
                     //Coluna do tabuleiro
                     for (int j = 0; j < 8; j++)
@@ -56,8 +69,57 @@ namespace Wolf_and_Sheep
                     }
                     Console.WriteLine();
                 }
+                    Console.WriteLine("");
+                    Console.WriteLine("Para onde queres ir, lobo?");
+                    Console.WriteLine("W - Para cima");
+                    Console.WriteLine("A - Para a esquerda");
+                    Console.WriteLine("S - Para baixo");
+                    Console.WriteLine("D - Para a direita");
+                    Console.WriteLine("");
+                    Console.WriteLine("O seu comando é: ");
+
+                    string comando = Console.ReadLine().ToUpper();
+
+                    //Movimentos do lobo
+                    if (comando == "W")
+                    {
+                        if (tabuleiro[linha - 2, coluna] == "P")
+                        {
+                            tabuleiro[linha, coluna] = "P";
+                            linha = linha - 2;
+                        }
+                    }
+                    else if (comando == "A")
+                    {
+                        if (tabuleiro[linha, coluna - 2] == "P")
+                        {
+                            tabuleiro[linha, coluna] = "P";
+                            coluna = coluna - 2;
+                        }    
+                    }
+                    else if (comando == "S")
+                    {
+                        if (tabuleiro[linha + 2, coluna] == "P")
+                        {
+                            tabuleiro[linha, coluna] = "P";
+                            linha = linha + 2;
+                        }    
+                    }
+                    else if (comando == "D")
+                    {
+                        if (tabuleiro[linha, coluna + 2] == "P")
+                        {
+                            tabuleiro[linha, coluna] = "P";
+                            coluna = coluna + 2;
+                        }
+                    }
+
+                    tabuleiro[linha, coluna] = jogador1;
+                }
+                
             }
             
+            //O jogador escolheu ver as regras do jogo
             if (escolha == "2")
             {
                 Console.WriteLine("Escolheste ver as regras.");
@@ -74,6 +136,7 @@ namespace Wolf_and_Sheep
                 Console.WriteLine("11 - A partida acaba quando se declarar um vencedor");
             }
             
+            //O jogador escolheu sair do jogo
             if (escolha == "3")
             {
                 Console.WriteLine("Escolheste sair do jogo.");
